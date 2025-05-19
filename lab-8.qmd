@@ -13,6 +13,10 @@ editor: source
 **Part 1:** Locate and examine the `robots.txt` file for this website. Summarize
 what you learn from it.
 
+The `robots.txt` file only had two lines. It read: `User-agent: *
+Sitemap: https://www.cheese.com/sitemap.xml`. This means that is has no restrictions. Presumably this is because it is a relatively low-traffic website.
+
+
 **Part 2:** Learn about the `html_attr()` function from `rvest`. Describe how
 this function works with a small example.
 
