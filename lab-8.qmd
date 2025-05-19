@@ -1,5 +1,6 @@
 ---
 title: "Lab 8"
+author: Visruth and Matt
 subtitle: "Cheese Gromit!"
 editor: source
 ---
