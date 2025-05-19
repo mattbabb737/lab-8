@@ -20,6 +20,22 @@ Sitemap: https://www.cheese.com/sitemap.xml`. This means that is has no restrict
 **Part 2:** Learn about the `html_attr()` function from `rvest`. Describe how
 this function works with a small example.
 
+This function gets the attributes associated with some HTML elements.
+
+```{r}
+#| message: false
+library(tidyverse)
+library(rvest)
+
+read_html("https://www.cheese.com/alphabetical/?per_page=100") |>
+  html_nodes(".product-img") |>
+  html_nodes("a") |>
+  html_nodes("img") |>
+  html_attr("class")
+```
+
+This small example demonstrates how to get whether the image exists for each cheese.
+
 **Part 3:** (Do this alongside Part 4 below.) I 
 used [ChatGPT](https://chat.openai.com/chat) to start the process of scraping
 cheese information with the following prompt:
