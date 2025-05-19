@@ -100,12 +100,15 @@ queries. (Note that you can view 100 cheeses at a time.)
 parse_page <- function(url, delay = 1) {
   Sys.sleep(delay)
 
+  # cheese product listings
   cheeses <- read_html(url) |>
     html_nodes(".product-item")
 
+  # temp object that's used twice
   nodes <- cheeses |>
     html_nodes("h3 a")
 
+  # building tibble
   tibble(
     name = nodes |> html_text(),
     url = nodes |>
@@ -120,9 +123,17 @@ parse_page <- function(url, delay = 1) {
 ```
 
 ```{r}
+# can't run this on last page--will find number of pages to parse automatically.
+num_pages <- "https://www.cheese.com/alphabetical/?per_page=100" |>
+  read_html() |>
+  html_nodes(".pagination a") |>
+  html_text() |>
+  last() |>
+  as.numeric()
+
 cheeses <- paste0(
   "https://www.cheese.com/alphabetical/?per_page=100&page=",
-  1:21
+  1:num_pages
 ) |>
   map_df(parse_page)
 ```
@@ -140,6 +151,30 @@ obtain the following detailed information:
 
 (Just 10 to avoid overtaxing the website! Continue adding a 1 second pause
 between page queries.)
+
+```{r}
+cheese_list <- c(
+  "https://www.cheese.com/paneer/",
+  "https://www.cheese.com/chevre-en-marinade/",
+  "https://www.cheese.com/chevre-log/",
+  "https://www.cheese.com/goat-gouda/",
+  "https://www.cheese.com/gotcha-gouda/",
+  "https://www.cheese.com/gouda/",
+  "https://www.cheese.com/camembert-des-camarades/",
+  "https://www.cheese.com/camembert-de-portneuf/",
+  "https://www.cheese.com/camembert-de-normandie/",
+  "https://www.cheese.com/camembert/"
+)
+```
+
+```{r}
+parse_cheese <- function(url, delay = 1) {
+}
+
+"https://www.cheese.com/camembert-de-normandie/" |>
+  read_html() |>
+  html_nodes(".panel-body")
+```
 
 **Part 6:** Evaluate the code that you wrote in terms of **efficiency**. To
 what extent do your function(s) adhere to the **principles for writing good functions**?
