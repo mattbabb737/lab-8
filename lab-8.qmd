@@ -2,6 +2,7 @@
 title: "Lab 8"
 author: Visruth and Matt
 subtitle: "Cheese Gromit!"
+embed-resources: true
 editor: source
 ---
 
@@ -51,9 +52,11 @@ cheese_names <- webpage %>%
   html_text()
 
 # Create a data frame to store the results
-cheese_df <- data.frame(Name = cheese_names,
-                        URL = cheese_data,
-                        stringsAsFactors = FALSE)
+cheese_df <- data.frame(
+  Name = cheese_names,
+  URL = cheese_data,
+  stringsAsFactors = FALSE
+)
 
 # Print the data frame
 print(cheese_df)
