@@ -223,8 +223,36 @@ parse_cheese <- function(url, delay = 1) {
 cheese_details <- map_dfr(cheese_list, parse_cheese)
 
 ```
+```{r}
 
+# Nice kable table
+
+library(knitr)
+library(kableExtra)
+
+cheese_details %>%
+  rename(
+    Milk    = milk,
+    Country = `country of origin`,
+    Family  = family,
+    Type    = type,
+    Flavour = flavour
+  ) %>%
+  kable(
+    caption = "10 Cheeses",
+    format = "html",
+    escape = TRUE
+  ) %>%
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c("striped", "hover", "condensed"),
+    position = "left"
+  )
+
+```
 **Part 6:** Evaluate the code that you wrote in terms of **efficiency**. To
 what extent do your function(s) adhere to the **principles for writing good functions**?
 To what extent are your **functions efficient**? To what extent is your 
 **iteration of these functions efficient**? 
+
+
