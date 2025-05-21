@@ -173,7 +173,9 @@ parse_cheese <- function(url, delay = 1) {
 
 "https://www.cheese.com/camembert-de-normandie/" |>
   read_html() |>
-  html_nodes(".panel-body")
+  html_nodes(".panel-body ul li") |>
+  html_text(trim = TRUE)
+# sep wider into tibble with NAs and rowbind or use hashmap or something?
 ```
 
 **Part 6:** Evaluate the code that you wrote in terms of **efficiency**. To
