@@ -2362,20 +2362,54 @@ vertical-align: -.125em;
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;https://www.cheese.com/camembert-de-normandie/&quot;</span> <span class="sc">|&gt;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>() <span class="sc">|&gt;</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&quot;.panel-body ul li&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;Made from unpasteurized cow&#39;s milk&quot;                              
- [2] &quot;Country of origin: France&quot;                                       
- [3] &quot;Region: Normandy&quot;                                                
- [4] &quot;Family: Camembert&quot;                                               
- [5] &quot;Type: soft, soft-ripened&quot;                                        
- [6] &quot;Texture: creamy&quot;                                                 
- [7] &quot;Rind: bloomy&quot;                                                    
- [8] &quot;Colour: pale yellow&quot;                                             
- [9] &quot;Flavour: creamy&quot;                                                 
-[10] &quot;Synonyms: Camembert de Normandie AOC, Camembert de Normandie PDO&quot;</code></pre>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># sep wider into tibble with NAs and rowbind or use hashmap or something?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sep wider into tibble with NAs and rowbind or use hashmap or something?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>parse_cheese <span class="ot">&lt;-</span> <span class="cf">function</span>(url, <span class="at">delay =</span> <span class="dv">1</span>) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(delay)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read page</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract bullet point text</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  raw_info <span class="ot">&lt;-</span> page <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.panel-body ul li&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract milk line separately (doesn&#39;t contain &quot;:&quot;)</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  milk_line <span class="ot">&lt;-</span> raw_info[<span class="fu">grepl</span>(<span class="st">&quot;^Made from&quot;</span>, raw_info)]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  milk <span class="ot">&lt;-</span> <span class="fu">str_remove</span>(milk_line, <span class="st">&quot;^Made from &quot;</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract remaining fields that use a colon</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  info_pairs <span class="ot">&lt;-</span> raw_info[<span class="fu">grepl</span>(<span class="st">&quot;:&quot;</span>, raw_info)] <span class="sc">%&gt;%</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_split_fixed</span>(<span class="st">&quot;:&quot;</span>, <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">field =</span> V1, <span class="at">value =</span> V2) <span class="sc">%&gt;%</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">field =</span> <span class="fu">str_trim</span>(<span class="fu">tolower</span>(field)),</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">value =</span> <span class="fu">str_trim</span>(value)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(field <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;country of origin&quot;</span>, <span class="st">&quot;family&quot;</span>, <span class="st">&quot;type&quot;</span>, <span class="st">&quot;flavour&quot;</span>))</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convert to wide format</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  cheese_info <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(info_pairs, <span class="at">names_from =</span> field, <span class="at">values_from =</span> value)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add milk column</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  cheese_info <span class="ot">&lt;-</span> cheese_info <span class="sc">%&gt;%</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">milk =</span> milk) <span class="sc">%&gt;%</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">relocate</span>(milk)</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cheese_info)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>cheese_details <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(cheese_list, parse_cheese)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`.</code></pre>
+</div>
 </div>
 <p><strong>Part 6:</strong> Evaluate the code that you wrote in terms of <strong>efficiency</strong>. To what extent do your function(s) adhere to the <strong>principles for writing good functions</strong>? To what extent are your <strong>functions efficient</strong>? To what extent is your <strong>iteration of these functions efficient</strong>?</p>
 

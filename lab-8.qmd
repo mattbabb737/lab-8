@@ -168,6 +168,8 @@ cheese_list <- c(
 ```
 
 ```{r}
+#| eval: false
+
 parse_cheese <- function(url, delay = 1) {
 }
 
@@ -176,6 +178,50 @@ parse_cheese <- function(url, delay = 1) {
   html_nodes(".panel-body ul li") |>
   html_text(trim = TRUE)
 # sep wider into tibble with NAs and rowbind or use hashmap or something?
+```
+
+```{r}
+
+parse_cheese <- function(url, delay = 1) {
+  Sys.sleep(delay)
+  
+  # Read page
+  page <- read_html(url)
+  
+  # Extract bullet point text
+  raw_info <- page %>%
+    html_nodes(".panel-body ul li") %>%
+    html_text(trim = TRUE)
+  
+  # Extract milk line separately (doesn't contain ":")
+  milk_line <- raw_info[grepl("^Made from", raw_info)]
+  milk <- str_remove(milk_line, "^Made from ")
+
+  # Extract remaining fields that use a colon
+  info_pairs <- raw_info[grepl(":", raw_info)] %>%
+    str_split_fixed(":", 2) %>%
+    as_tibble() %>%
+    rename(field = V1, value = V2) %>%
+    mutate(
+      field = str_trim(tolower(field)),
+      value = str_trim(value)
+    ) %>%
+    filter(field %in% c("country of origin", "family", "type", "flavour"))
+  
+  # Convert to wide format
+  cheese_info <- pivot_wider(info_pairs, names_from = field, values_from = value)
+  
+  # Add milk column
+  cheese_info <- cheese_info %>%
+    mutate(milk = milk) %>%
+    relocate(milk)
+
+  return(cheese_info)
+}
+
+
+cheese_details <- map_dfr(cheese_list, parse_cheese)
+
 ```
 
 **Part 6:** Evaluate the code that you wrote in terms of **efficiency**. To
