@@ -16,7 +16,6 @@ what you learn from it.
 The `robots.txt` file only had two lines. It read: `User-agent: *
 Sitemap: https://www.cheese.com/sitemap.xml`. This means that is has no restrictions. Presumably this is because it is a relatively low-traffic website.
 
-
 **Part 2:** Learn about the `html_attr()` function from `rvest`. Describe how
 this function works with a small example.
 
@@ -59,14 +58,14 @@ url <- "https://www.cheese.com/alphabetical"
 webpage <- read_html(url)
 
 # Extract the cheese names and URLs
-cheese_data <- webpage %>%
-  html_nodes(".cheese-item") %>%
-  html_nodes("a") %>%
-  html_attr("href") %>%
+cheese_data <- webpage |>
+  html_nodes(".cheese-item") |>
+  html_nodes("a") |>
+  html_attr("href") |>
   paste0("https://cheese.com", .)
 
-cheese_names <- webpage %>%
-  html_nodes(".cheese-item h3") %>%
+cheese_names <- webpage |>
+  html_nodes(".cheese-item h3") |>
   html_text()
 
 # Create a data frame to store the results
@@ -110,7 +109,7 @@ parse_page <- function(url, delay = 1) {
 
   # building tibble
   tibble(
-    name = nodes |> html_text(),
+    cheese = nodes |> html_text(),
     url = nodes |>
       html_attr("href") |>
       (\(slug) glue::glue("https://www.cheese.com{slug}"))(),
@@ -123,6 +122,7 @@ parse_page <- function(url, delay = 1) {
 ```
 
 ```{r}
+#| cache: true
 # can't run this on last page--will find number of pages to parse automatically.
 num_pages <- "https://www.cheese.com/alphabetical/?per_page=100" |>
   read_html() |>
@@ -130,12 +130,22 @@ num_pages <- "https://www.cheese.com/alphabetical/?per_page=100" |>
   html_text() |>
   last() |>
   as.numeric()
+# NOTE: this seems like a simple pattern so there might already be a function which does this
 
 cheeses <- paste0(
   "https://www.cheese.com/alphabetical/?per_page=100&page=",
   1:num_pages
 ) |>
   map_df(parse_page)
+```
+
+```{r}
+library(gt)
+
+cheeses |>
+  sample_n(10) |>
+  gt() |>
+  cols_label(cheese = "Cheese", url = "URL", has_image = "Image Available?")
 ```
 
 **Part 5:** When you go to a particular cheese's page (like 
@@ -153,6 +163,8 @@ obtain the following detailed information:
 between page queries.)
 
 ```{r}
+#| warning: false
+#| cache: true
 cheese_list <- c(
   "https://www.cheese.com/paneer/",
   "https://www.cheese.com/chevre-en-marinade/",
@@ -165,94 +177,61 @@ cheese_list <- c(
   "https://www.cheese.com/camembert-de-normandie/",
   "https://www.cheese.com/camembert/"
 )
-```
 
-```{r}
-#| eval: false
-
-parse_cheese <- function(url, delay = 1) {
-}
-
-"https://www.cheese.com/camembert-de-normandie/" |>
-  read_html() |>
-  html_nodes(".panel-body ul li") |>
-  html_text(trim = TRUE)
-# sep wider into tibble with NAs and rowbind or use hashmap or something?
-```
-
-```{r}
-
+# parses a cheese.com url by returning pertinent information about provided cheese
 parse_cheese <- function(url, delay = 1) {
   Sys.sleep(delay)
-  
-  # Read page
-  page <- read_html(url)
-  
-  # Extract bullet point text
-  raw_info <- page %>%
-    html_nodes(".panel-body ul li") %>%
+
+  raw_info <- read_html(url) |>
+    html_nodes(".panel-body ul li") |>
     html_text(trim = TRUE)
-  
-  # Extract milk line separately (doesn't contain ":")
-  milk_line <- raw_info[grepl("^Made from", raw_info)]
-  milk <- str_remove(milk_line, "^Made from ")
 
   # Extract remaining fields that use a colon
-  info_pairs <- raw_info[grepl(":", raw_info)] %>%
-    str_split_fixed(":", 2) %>%
-    as_tibble() %>%
-    rename(field = V1, value = V2) %>%
+  raw_info[grepl(":", raw_info)] |>
+    str_split_fixed(":", 2) |>
+    as_tibble() |>
+    rename(field = V1, value = V2) |>
     mutate(
       field = str_trim(tolower(field)),
       value = str_trim(value)
-    ) %>%
-    filter(field %in% c("country of origin", "family", "type", "flavour"))
-  
-  # Convert to wide format
-  cheese_info <- pivot_wider(info_pairs, names_from = field, values_from = value)
-  
-  # Add milk column
-  cheese_info <- cheese_info %>%
-    mutate(milk = milk) %>%
-    relocate(milk)
-
-  return(cheese_info)
+    ) |>
+    filter(field %in% c("country of origin", "family", "type", "flavour")) |>
+    pivot_wider(
+      names_from = field,
+      values_from = value
+    ) |>
+    mutate(
+      Milk = str_remove(raw_info[grepl("^Made from", raw_info)], "^Made from "),
+      .before = `country of origin`
+    )
 }
 
-
+# caching, so saving object is good
 cheese_details <- map_dfr(cheese_list, parse_cheese)
-
 ```
+
 ```{r}
-
-# Nice kable table
-
-library(knitr)
-library(kableExtra)
-
-cheese_details %>%
-  rename(
-    Milk    = milk,
-    Country = `country of origin`,
-    Family  = family,
-    Type    = type,
-    Flavour = flavour
-  ) %>%
-  kable(
-    caption = "10 Cheeses",
-    format = "html",
-    escape = TRUE
-  ) %>%
-  kable_styling(
-    full_width = FALSE,
-    bootstrap_options = c("striped", "hover", "condensed"),
-    position = "left"
+cheese_details |>
+  mutate(
+    Cheese = str_to_title(
+      basename(cheese_list) |> str_replace_all("-", " ")
+    ),
+    .before = Milk
+  ) |>
+  gt() |>
+  cols_label(
+    `country of origin` = "Country",
+    family = "Family",
+    type = "Type",
+    flavour = "Flavour"
+  ) |>
+  tab_header(
+    title = "10 Cheeses"
   )
-
 ```
+
 **Part 6:** Evaluate the code that you wrote in terms of **efficiency**. To
 what extent do your function(s) adhere to the **principles for writing good functions**?
 To what extent are your **functions efficient**? To what extent is your 
 **iteration of these functions efficient**? 
-
 
