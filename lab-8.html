@@ -2301,13 +2301,13 @@ vertical-align: -.125em;
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.product-item&quot;</span>)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># temp object that&#39;s used twice</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  nodes <span class="ot">&lt;-</span> cheeses <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  temp_cheese_data <span class="ot">&lt;-</span> cheeses <span class="sc">|&gt;</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;h3 a&quot;</span>)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># building tibble</span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cheese =</span> nodes <span class="sc">|&gt;</span> <span class="fu">html_text</span>(),</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> nodes <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">cheese =</span> temp_cheese_data <span class="sc">|&gt;</span> <span class="fu">html_text</span>(),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> temp_cheese_data <span class="sc">|&gt;</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">html_attr</span>(<span class="st">&quot;href&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>      (\(slug) glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">&quot;https://www.cheese.com{slug}&quot;</span>))(),</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">has_image =</span> cheeses <span class="sc">|&gt;</span></span>
@@ -2339,22 +2339,25 @@ vertical-align: -.125em;
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>cheeses <span class="sc">|&gt;</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">cheese =</span> <span class="st">&quot;Cheese&quot;</span>, <span class="at">url =</span> <span class="st">&quot;URL&quot;</span>, <span class="at">has_image =</span> <span class="st">&quot;Image Available?&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;10 Random Cheeses&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">cheese =</span> <span class="st">&quot;Cheese&quot;</span>, <span class="at">url =</span> <span class="st">&quot;URL&quot;</span>, <span class="at">has_image =</span> <span class="st">&quot;Image Available?&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="ahkqugrviz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ahkqugrviz table {
+<div id="siezzldlpc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#siezzldlpc table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#ahkqugrviz thead, #ahkqugrviz tbody, #ahkqugrviz tfoot, #ahkqugrviz tr, #ahkqugrviz td, #ahkqugrviz th {
+#siezzldlpc thead, #siezzldlpc tbody, #siezzldlpc tfoot, #siezzldlpc tr, #siezzldlpc td, #siezzldlpc th {
 border-style: none;
 }
-#ahkqugrviz p {
+#siezzldlpc p {
 margin: 0;
 padding: 0;
 }
-#ahkqugrviz .gt_table {
+#siezzldlpc .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2379,11 +2382,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#ahkqugrviz .gt_caption {
+#siezzldlpc .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#ahkqugrviz .gt_title {
+#siezzldlpc .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2394,7 +2397,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#ahkqugrviz .gt_subtitle {
+#siezzldlpc .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2405,7 +2408,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#ahkqugrviz .gt_heading {
+#siezzldlpc .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2416,12 +2419,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ahkqugrviz .gt_bottom_border {
+#siezzldlpc .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ahkqugrviz .gt_col_headings {
+#siezzldlpc .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2435,7 +2438,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ahkqugrviz .gt_col_heading {
+#siezzldlpc .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2454,7 +2457,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#ahkqugrviz .gt_column_spanner_outer {
+#siezzldlpc .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2465,13 +2468,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#ahkqugrviz .gt_column_spanner_outer:first-child {
+#siezzldlpc .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#ahkqugrviz .gt_column_spanner_outer:last-child {
+#siezzldlpc .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#ahkqugrviz .gt_column_spanner {
+#siezzldlpc .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2482,10 +2485,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#ahkqugrviz .gt_spanner_row {
+#siezzldlpc .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#ahkqugrviz .gt_group_heading {
+#siezzldlpc .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2510,7 +2513,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#ahkqugrviz .gt_empty_group_heading {
+#siezzldlpc .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2524,13 +2527,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#ahkqugrviz .gt_from_md > :first-child {
+#siezzldlpc .gt_from_md > :first-child {
 margin-top: 0;
 }
-#ahkqugrviz .gt_from_md > :last-child {
+#siezzldlpc .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#ahkqugrviz .gt_row {
+#siezzldlpc .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2548,7 +2551,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#ahkqugrviz .gt_stub {
+#siezzldlpc .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2560,7 +2563,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ahkqugrviz .gt_stub_row_group {
+#siezzldlpc .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2573,13 +2576,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#ahkqugrviz .gt_row_group_first td {
+#siezzldlpc .gt_row_group_first td {
 border-top-width: 2px;
 }
-#ahkqugrviz .gt_row_group_first th {
+#siezzldlpc .gt_row_group_first th {
 border-top-width: 2px;
 }
-#ahkqugrviz .gt_summary_row {
+#siezzldlpc .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2588,14 +2591,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ahkqugrviz .gt_first_summary_row {
+#siezzldlpc .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#ahkqugrviz .gt_first_summary_row.thick {
+#siezzldlpc .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#ahkqugrviz .gt_last_summary_row {
+#siezzldlpc .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2604,7 +2607,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ahkqugrviz .gt_grand_summary_row {
+#siezzldlpc .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2613,7 +2616,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ahkqugrviz .gt_first_grand_summary_row {
+#siezzldlpc .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2622,7 +2625,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#ahkqugrviz .gt_last_grand_summary_row_top {
+#siezzldlpc .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2631,10 +2634,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#ahkqugrviz .gt_striped {
+#siezzldlpc .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#ahkqugrviz .gt_table_body {
+#siezzldlpc .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2642,7 +2645,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ahkqugrviz .gt_footnotes {
+#siezzldlpc .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2655,7 +2658,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ahkqugrviz .gt_footnote {
+#siezzldlpc .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -2663,7 +2666,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ahkqugrviz .gt_sourcenotes {
+#siezzldlpc .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2676,71 +2679,74 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ahkqugrviz .gt_sourcenote {
+#siezzldlpc .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ahkqugrviz .gt_left {
+#siezzldlpc .gt_left {
 text-align: left;
 }
-#ahkqugrviz .gt_center {
+#siezzldlpc .gt_center {
 text-align: center;
 }
-#ahkqugrviz .gt_right {
+#siezzldlpc .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#ahkqugrviz .gt_font_normal {
+#siezzldlpc .gt_font_normal {
 font-weight: normal;
 }
-#ahkqugrviz .gt_font_bold {
+#siezzldlpc .gt_font_bold {
 font-weight: bold;
 }
-#ahkqugrviz .gt_font_italic {
+#siezzldlpc .gt_font_italic {
 font-style: italic;
 }
-#ahkqugrviz .gt_super {
+#siezzldlpc .gt_super {
 font-size: 65%;
 }
-#ahkqugrviz .gt_footnote_marks {
+#siezzldlpc .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#ahkqugrviz .gt_asterisk {
+#siezzldlpc .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#ahkqugrviz .gt_indent_1 {
+#siezzldlpc .gt_indent_1 {
 text-indent: 5px;
 }
-#ahkqugrviz .gt_indent_2 {
+#siezzldlpc .gt_indent_2 {
 text-indent: 10px;
 }
-#ahkqugrviz .gt_indent_3 {
+#siezzldlpc .gt_indent_3 {
 text-indent: 15px;
 }
-#ahkqugrviz .gt_indent_4 {
+#siezzldlpc .gt_indent_4 {
 text-indent: 20px;
 }
-#ahkqugrviz .gt_indent_5 {
+#siezzldlpc .gt_indent_5 {
 text-indent: 25px;
 }
-#ahkqugrviz .katex-display {
+#siezzldlpc .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#ahkqugrviz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#siezzldlpc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
 
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
-<tr class="gt_col_headings header">
+<tr class="gt_heading header">
+<th colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border">10 Random Cheeses</th>
+</tr>
+<tr class="gt_col_headings even">
 <th id="cheese" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Cheese</th>
 <th id="url" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">URL</th>
 <th id="has_image" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Image Available?</th>
@@ -2748,54 +2754,54 @@ height: 0px !important;
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="cheese">Forsterkase</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/forsterkase/</td>
-<td class="gt_row gt_center" headers="has_image">FALSE</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="cheese">Seahive</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/seahive/</td>
-<td class="gt_row gt_center" headers="has_image">TRUE</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="cheese">Operetta</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/operetta/</td>
-<td class="gt_row gt_center" headers="has_image">FALSE</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="cheese">Jarlsberg</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/jarlsberg/</td>
-<td class="gt_row gt_center" headers="has_image">TRUE</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="cheese">Menonita</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/menonita/</td>
+<td class="gt_row gt_left" headers="cheese">Point Reyes Toma</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/point-reyes-toma/</td>
 <td class="gt_row gt_center" headers="has_image">TRUE</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="cheese">Cambozola Grand Noir</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/cambozola-grand-noir/</td>
-<td class="gt_row gt_center" headers="has_image">TRUE</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="cheese">Pepato</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/pepato/</td>
-<td class="gt_row gt_center" headers="has_image">TRUE</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="cheese">Sheep Gouda</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/sheep-gouda/</td>
+<td class="gt_row gt_left" headers="cheese">Salemville Amish Blue</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/salemville-amish-blue/</td>
 <td class="gt_row gt_center" headers="has_image">FALSE</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="cheese">Fromage Cathare</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/fromage-cathare/</td>
+<td class="gt_row gt_left" headers="cheese">Llanglofan Farmhouse</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/llanglofan-farmhouse/</td>
+<td class="gt_row gt_center" headers="has_image">FALSE</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="cheese">Mine-Gabhar</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/mine-gabhar/</td>
+<td class="gt_row gt_center" headers="has_image">FALSE</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="cheese">Blue Yonder</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/blue-yonder/</td>
+<td class="gt_row gt_center" headers="has_image">FALSE</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="cheese">Triple Crème Brie</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/triple-creme-brie/</td>
+<td class="gt_row gt_center" headers="has_image">FALSE</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="cheese">Prince-Jean</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/prince-jean/</td>
+<td class="gt_row gt_center" headers="has_image">FALSE</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="cheese">St Tola Ash Log</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/st-tola-ash-log/</td>
+<td class="gt_row gt_center" headers="has_image">TRUE</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="cheese">Alisia-Victoria</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/alisia-victoria/</td>
 <td class="gt_row gt_center" headers="has_image">TRUE</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="cheese">Haystack Peak</td>
-<td class="gt_row gt_center" headers="url">https://www.cheese.com/haystack-peak/</td>
-<td class="gt_row gt_center" headers="has_image">FALSE</td>
+<td class="gt_row gt_left" headers="cheese">Pleasant Ridge Reserve</td>
+<td class="gt_row gt_center" headers="url">https://www.cheese.com/pleasant-ridge-reserve/</td>
+<td class="gt_row gt_center" headers="has_image">TRUE</td>
 </tr>
 </tbody>
 </table>
@@ -2854,8 +2860,7 @@ height: 0px !important;
 <span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co"># caching, so saving object is good</span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>cheese_details <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(cheese_list, parse_cheese)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>cheese_details <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(cheese_list, parse_cheese)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cheese_details <span class="sc">|&gt;</span></span>
@@ -2873,23 +2878,23 @@ height: 0px !important;
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">flavour =</span> <span class="st">&quot;Flavour&quot;</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;10 Cheeses&quot;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Details on 10 Cheeses&quot;</span></span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="ltfzoztcdb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ltfzoztcdb table {
+<div id="wevajhbgby" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wevajhbgby table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#ltfzoztcdb thead, #ltfzoztcdb tbody, #ltfzoztcdb tfoot, #ltfzoztcdb tr, #ltfzoztcdb td, #ltfzoztcdb th {
+#wevajhbgby thead, #wevajhbgby tbody, #wevajhbgby tfoot, #wevajhbgby tr, #wevajhbgby td, #wevajhbgby th {
 border-style: none;
 }
-#ltfzoztcdb p {
+#wevajhbgby p {
 margin: 0;
 padding: 0;
 }
-#ltfzoztcdb .gt_table {
+#wevajhbgby .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2914,11 +2919,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_caption {
+#wevajhbgby .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#ltfzoztcdb .gt_title {
+#wevajhbgby .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2929,7 +2934,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#ltfzoztcdb .gt_subtitle {
+#wevajhbgby .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2940,7 +2945,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#ltfzoztcdb .gt_heading {
+#wevajhbgby .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2951,12 +2956,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_bottom_border {
+#wevajhbgby .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_col_headings {
+#wevajhbgby .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2970,7 +2975,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_col_heading {
+#wevajhbgby .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2989,7 +2994,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#ltfzoztcdb .gt_column_spanner_outer {
+#wevajhbgby .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3000,13 +3005,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#ltfzoztcdb .gt_column_spanner_outer:first-child {
+#wevajhbgby .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#ltfzoztcdb .gt_column_spanner_outer:last-child {
+#wevajhbgby .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#ltfzoztcdb .gt_column_spanner {
+#wevajhbgby .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -3017,10 +3022,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#ltfzoztcdb .gt_spanner_row {
+#wevajhbgby .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#ltfzoztcdb .gt_group_heading {
+#wevajhbgby .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3045,7 +3050,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#ltfzoztcdb .gt_empty_group_heading {
+#wevajhbgby .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -3059,13 +3064,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#ltfzoztcdb .gt_from_md > :first-child {
+#wevajhbgby .gt_from_md > :first-child {
 margin-top: 0;
 }
-#ltfzoztcdb .gt_from_md > :last-child {
+#wevajhbgby .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#ltfzoztcdb .gt_row {
+#wevajhbgby .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3083,7 +3088,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#ltfzoztcdb .gt_stub {
+#wevajhbgby .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3095,7 +3100,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ltfzoztcdb .gt_stub_row_group {
+#wevajhbgby .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -3108,13 +3113,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#ltfzoztcdb .gt_row_group_first td {
+#wevajhbgby .gt_row_group_first td {
 border-top-width: 2px;
 }
-#ltfzoztcdb .gt_row_group_first th {
+#wevajhbgby .gt_row_group_first th {
 border-top-width: 2px;
 }
-#ltfzoztcdb .gt_summary_row {
+#wevajhbgby .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3123,14 +3128,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ltfzoztcdb .gt_first_summary_row {
+#wevajhbgby .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_first_summary_row.thick {
+#wevajhbgby .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#ltfzoztcdb .gt_last_summary_row {
+#wevajhbgby .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3139,7 +3144,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_grand_summary_row {
+#wevajhbgby .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -3148,7 +3153,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ltfzoztcdb .gt_first_grand_summary_row {
+#wevajhbgby .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3157,7 +3162,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_last_grand_summary_row_top {
+#wevajhbgby .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -3166,10 +3171,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_striped {
+#wevajhbgby .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#ltfzoztcdb .gt_table_body {
+#wevajhbgby .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -3177,7 +3182,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_footnotes {
+#wevajhbgby .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3190,7 +3195,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_footnote {
+#wevajhbgby .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -3198,7 +3203,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ltfzoztcdb .gt_sourcenotes {
+#wevajhbgby .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -3211,64 +3216,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#ltfzoztcdb .gt_sourcenote {
+#wevajhbgby .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#ltfzoztcdb .gt_left {
+#wevajhbgby .gt_left {
 text-align: left;
 }
-#ltfzoztcdb .gt_center {
+#wevajhbgby .gt_center {
 text-align: center;
 }
-#ltfzoztcdb .gt_right {
+#wevajhbgby .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#ltfzoztcdb .gt_font_normal {
+#wevajhbgby .gt_font_normal {
 font-weight: normal;
 }
-#ltfzoztcdb .gt_font_bold {
+#wevajhbgby .gt_font_bold {
 font-weight: bold;
 }
-#ltfzoztcdb .gt_font_italic {
+#wevajhbgby .gt_font_italic {
 font-style: italic;
 }
-#ltfzoztcdb .gt_super {
+#wevajhbgby .gt_super {
 font-size: 65%;
 }
-#ltfzoztcdb .gt_footnote_marks {
+#wevajhbgby .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#ltfzoztcdb .gt_asterisk {
+#wevajhbgby .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#ltfzoztcdb .gt_indent_1 {
+#wevajhbgby .gt_indent_1 {
 text-indent: 5px;
 }
-#ltfzoztcdb .gt_indent_2 {
+#wevajhbgby .gt_indent_2 {
 text-indent: 10px;
 }
-#ltfzoztcdb .gt_indent_3 {
+#wevajhbgby .gt_indent_3 {
 text-indent: 15px;
 }
-#ltfzoztcdb .gt_indent_4 {
+#wevajhbgby .gt_indent_4 {
 text-indent: 20px;
 }
-#ltfzoztcdb .gt_indent_5 {
+#wevajhbgby .gt_indent_5 {
 text-indent: 25px;
 }
-#ltfzoztcdb .katex-display {
+#wevajhbgby .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#ltfzoztcdb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#wevajhbgby div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -3276,7 +3281,7 @@ height: 0px !important;
 <table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading header">
-<th colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border">10 Cheeses</th>
+<th colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border">Details on 10 Cheeses</th>
 </tr>
 <tr class="gt_col_headings even">
 <th id="Cheese" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Cheese</th>
@@ -3375,6 +3380,7 @@ height: 0px !important;
 </div>
 </div>
 <p><strong>Part 6:</strong> Evaluate the code that you wrote in terms of <strong>efficiency</strong>. To what extent do your function(s) adhere to the <strong>principles for writing good functions</strong>? To what extent are your <strong>functions efficient</strong>? To what extent is your <strong>iteration of these functions efficient</strong>?</p>
+<p>The code is efficient. There are few objects saved and pipelines are used extensively to further that goal. Furthermore, leveraging Quarto’s design, we can further bolster efficiency by selectively caching the output of a few cells and make a nice space/time deal–scraping the data takes time due to the number of pages that need to be scraped, so we elected to cache those outputs. Of course, our code still has to run once, but since the targets seem to be static, this allows us to spend some memory to speed up execution time. Since we are caching, we save two objects so as to obviate scraping the site again.</p>
 
 </main>
 <!-- /main column -->

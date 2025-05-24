@@ -104,13 +104,13 @@ parse_page <- function(url, delay = 1) {
     html_nodes(".product-item")
 
   # temp object that's used twice
-  nodes <- cheeses |>
+  temp_cheese_data <- cheeses |>
     html_nodes("h3 a")
 
   # building tibble
   tibble(
-    cheese = nodes |> html_text(),
-    url = nodes |>
+    cheese = temp_cheese_data |> html_text(),
+    url = temp_cheese_data |>
       html_attr("href") |>
       (\(slug) glue::glue("https://www.cheese.com{slug}"))(),
     has_image = cheeses |>
@@ -145,6 +145,9 @@ library(gt)
 cheeses |>
   sample_n(10) |>
   gt() |>
+  tab_header(
+    title = "10 Random Cheeses"
+  ) |>
   cols_label(cheese = "Cheese", url = "URL", has_image = "Image Available?")
 ```
 
@@ -206,7 +209,6 @@ parse_cheese <- function(url, delay = 1) {
     )
 }
 
-# caching, so saving object is good
 cheese_details <- map_dfr(cheese_list, parse_cheese)
 ```
 
@@ -226,7 +228,7 @@ cheese_details |>
     flavour = "Flavour"
   ) |>
   tab_header(
-    title = "10 Cheeses"
+    title = "Details on 10 Cheeses"
   )
 ```
 
@@ -235,3 +237,4 @@ what extent do your function(s) adhere to the **principles for writing good func
 To what extent are your **functions efficient**? To what extent is your 
 **iteration of these functions efficient**? 
 
+The code is efficient. There are few objects saved and pipelines are used extensively to further that goal. Furthermore, leveraging Quarto's design, we can further bolster efficiency by selectively caching the output of a few cells and make a nice space/time deal--scraping the data takes time due to the number of pages that need to be scraped, so we elected to cache those outputs. Of course, our code still has to run once, but since the targets seem to be static, this allows us to spend some memory to speed up execution time. Since we are caching, we save two objects so as to obviate scraping the site again.
